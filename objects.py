@@ -1,7 +1,7 @@
 # @Date:   2020-11-18T19:09:03+01:00
 # @Email:  kalle.hessman@gmail.com
 # @Filename: objects.py
-# @Last modified time: 2020-11-20T23:55:03+01:00
+# @Last modified time: 2020-11-22T21:36:21+01:00
 
 
 
@@ -169,7 +169,71 @@ krans ={
 }
 
 
-candle_base ={
+candle1_base ={
+    'id':'candle_base',
+    'x':47,
+    'y':53,
+    'color':'#745f43',
+    'rows':[
+    '■■■■■■■',
+    ' ■■■■■ '
+    ]
+}
+candle1 ={
+    'id':'candle',
+    'x':47,
+    'y':51,
+    'color':'#dddddd',
+    'rows':[
+    '  ■■■  ',
+    '  ■■■  '
+    ]
+}
+
+candle1_flame ={
+    'id':'candle1_flame',
+    'x':49,
+    'y':49,
+    'color':'#000000',
+    'rows':[
+    ' ■ ',
+    '■■■'
+    ]
+}
+
+candle2_base ={
+    'id':'candle_base',
+    'x':76,
+    'y':53,
+    'color':'#745f43',
+    'rows':[
+    '■■■■■■■',
+    ' ■■■■■ '
+    ]
+}
+candle2 ={
+    'id':'candle',
+    'x':76,
+    'y':51,
+    'color':'#dddddd',
+    'rows':[
+    '  ■■■  ',
+    '  ■■■  '
+    ]
+}
+
+candle2_flame ={
+    'id':'candle2_flame',
+    'x':78,
+    'y':49,
+    'color':'#000000',
+    'rows':[
+    ' ■ ',
+    '■■■'
+    ]
+}
+
+candle3_base ={
     'id':'candle_base',
     'x':117,
     'y':53,
@@ -179,7 +243,7 @@ candle_base ={
     ' ■■■■■ '
     ]
 }
-candle ={
+candle3 ={
     'id':'candle',
     'x':117,
     'y':51,
@@ -190,11 +254,43 @@ candle ={
     ]
 }
 
-candle_flame ={
-    'id':'candle_flame',
+candle3_flame ={
+    'id':'candle3_flame',
     'x':119,
     'y':49,
-    'color':'#ff6666',
+    'color':'#000000',
+    'rows':[
+    ' ■ ',
+    '■■■'
+    ]
+}
+
+candle4_base ={
+    'id':'candle_base',
+    'x':147,
+    'y':53,
+    'color':'#745f43',
+    'rows':[
+    '■■■■■■■',
+    ' ■■■■■ '
+    ]
+}
+candle4 ={
+    'id':'candle',
+    'x':147,
+    'y':51,
+    'color':'#dddddd',
+    'rows':[
+    '  ■■■  ',
+    '  ■■■  '
+    ]
+}
+
+candle4_flame ={
+    'id':'candle4_flame',
+    'x':149,
+    'y':49,
+    'color':'#000000',
     'rows':[
     ' ■ ',
     '■■■'
