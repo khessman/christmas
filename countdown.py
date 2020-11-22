@@ -1,7 +1,7 @@
 # @Date:   2020-11-17T20:19:55+01:00
 # @Email:  kalle.hessman@gmail.com
 # @Filename: blaj4.py
-# @Last modified time: 2020-11-22T21:38:27+01:00
+# @Last modified time: 2020-11-22T21:49:17+01:00
 
 '''
 Dependencies:
@@ -41,7 +41,7 @@ small_flake='°'
 rain="'"
 heavy_rain='/'
 current_flake=flake
-wind_dir=-1
+wind_dir=0
 wind_speed=1
 wind_speed_inc=1
 wind_dir_inc=1
@@ -326,7 +326,7 @@ def draw_status():
 
     moveCursor(len(grid),0)
     print(f"INFO:{DEBUG} Wind: {wind_speed}m/s Gridsize:{size_x}x{size_y} Frozen flakes:{freezecnt} Changed tiles this frame:{change_counter}   ")
-    delta = (dt.datetime(2020, 12, 24) - dt.datetime.now()).days
+    delta = (dt.datetime(2020, 12, 24) - dt.datetime.now()).days +1
     print(f'Today it is {delta} days left until a fat man arrives through the chimney...')
 
 def draw():
@@ -414,7 +414,6 @@ def simulate_winter():
         update_snow()
         melt_pillar(10)
         advent_check()
-        # animate_candle1()
 
         time.sleep(1/FRAME_RATE)
 
