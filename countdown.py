@@ -1,7 +1,7 @@
 # @Date:   2020-11-17T20:19:55+01:00
 # @Email:  kalle.hessman@gmail.com
 # @Filename: blaj4.py
-# @Last modified time: 2020-11-22T21:49:17+01:00
+# @Last modified time: 2020-11-22T21:57:39+01:00
 
 '''
 Dependencies:
@@ -163,6 +163,7 @@ def update_snow():
                 # DEBUG="groundfreeze"
                 continue
 
+
             # cell has passed all freeze tests, now scroll it down to the ground or onto an object.
             #if cells are background then dont bother...
             if cell.type == 'background' and cellAbove.type == 'background':
@@ -241,11 +242,11 @@ def wind(velocity,direction):
 
                 if cell.type == 'background' and cell.tile == current_flake and cell.frozen == False and cellToLeft.frozen == False: #current cell is a flake and not frozen
                     # make sure we dont move a flake into an object or rollover from left to right side of screen(due to list rollover)
-                    if cellToLeft.type !='object' and col+(direction*velocity) > 0:
+                    if cellToLeft.type !='object' and cellToLeft.type !='fire' and col+(direction*velocity) > 0:
                         cellToLeft.tile = cell.tile
                         cellToLeft.hasChanged=True
                         #cell to the right is not a object
-                        if cellToRight.type !='object':
+                        if cellToRight.type !='object' and cellToRight.type != 'fire':
                             cell.tile=cellToRight.tile
                             cell.hasChanged=True
 
@@ -265,11 +266,11 @@ def wind(velocity,direction):
 
                 if cell.type == 'background' and cell.tile == current_flake and cell.frozen == False and cellToRight.frozen == False: #current cell is a flake and not frozen
                     # make sure we dont move a flake into an object or rollover from left to right side of screen(due to list rollover)
-                    if cellToRight.type !='object' and col+(direction*velocity) > 0:
+                    if cellToRight.type !='object' and cellToRight.type != 'fire' and col+(direction*velocity) > 0:
                         cellToRight.tile = cell.tile
                         cellToRight.hasChanged=True
                         #cell to the right is not a object
-                        if cellToLeft.type !='object':
+                        if cellToLeft.type !='object' and cellToLeft.type !='fire':
                             cell.tile=cellToLeft.tile
                             cell.hasChanged=True
 
@@ -353,6 +354,7 @@ def animate_candle(candle):
                     if obj['rows'][y][x] != ' ':
                         cell.color = (255,random.randint(100,200),random.randint(0,20))
                         cell.hasChanged = True
+                        cell.type='fire'
 
 def weather_control(delay):
     global weather_time,current_flake,current_weather, wind_dir, wind_speed, wind_dir_time, wind_speed_time, wind_speed_inc, wind_dir_inc, DEBUG
