@@ -1,7 +1,7 @@
 # @Date:   2020-11-17T20:19:55+01:00
 # @Email:  kalle.hessman@gmail.com
 # @Filename: blaj4.py
-# @Last modified time: 2020-11-22T21:57:39+01:00
+# @Last modified time: 2020-11-22T22:31:38+01:00
 
 '''
 Dependencies:
@@ -40,7 +40,7 @@ flake="*"
 small_flake='°'
 rain="'"
 heavy_rain='/'
-current_flake=flake
+current_flake=small_flake
 wind_dir=0
 wind_speed=1
 wind_speed_inc=1
@@ -52,24 +52,24 @@ current_weather=0
 
 
 
-object_list=[
+init_draw_list=[
             # objects.testimage,
             # objects.object1,
             objects.candle1_base,
             objects.candle1,
-            objects.candle1_flame,
+            # objects.candle1_flame,
 
             objects.candle2_base,
             objects.candle2,
-            objects.candle2_flame,
+            # objects.candle2_flame,
 
             objects.candle3_base,
             objects.candle3,
-            objects.candle3_flame,
+            # objects.candle3_flame,
 
             objects.candle4_base,
             objects.candle4,
-            objects.candle4_flame,
+            # objects.candle4_flame,
 
             objects.G,
             objects.O,
@@ -78,6 +78,12 @@ object_list=[
             objects.U,
             objects.L,
             objects.krans
+            ]
+object_list=[
+            objects.candle1_flame,
+            objects.candle2_flame,
+            objects.candle3_flame,
+            objects.candle4_flame,
             ]
 
 
@@ -174,7 +180,7 @@ def update_snow():
                     cell.hasChanged = True
 
 def update_objects():
-    for obj in object_list: # for each object...
+    for obj in init_draw_list: # for each object...
         start_x = obj['x']  # x pos of current obj
         start_y = obj['y']  # y pos of current obj
         try:
@@ -197,28 +203,31 @@ def update_objects():
         except IndexError:
             raise OutOfBoundsError(f"Obj {obj['id']} is out of screen (x:{obj['x']},y:{obj['y']})")
 
-def draw_object(obj):
-    start_x = obj['x']  # x pos of current obj
-    start_y = obj['y']  # y pos of current obj
-    try:
-        for y in range(len(obj['rows'])):#for each row of object
-            for x in range(len(obj['rows'][y])): #for each col of row
-                cell = grid[start_y+y][start_x+x]
-                if obj['rows'][y][x] == ' ':    #found a blank in the tile to draw? Make it transparent
-                    if cell.type !='object':
-                        # cell.type = 'background'
-                        cell.tile=bkg
-                else:
-                    if cell.tile == obj['rows'][y][x]:
-                        cell.hasChanged = False
-                        continue
-                    else:
-                        cell.tile = obj['rows'][y][x]
-                        cell.type = 'object'
-                        cell.color = obj['color']
-                        cell.hasChanged = True
-    except IndexError:
-        raise OutOfBoundsError(f"Obj {obj['id']} is out of screen (x:{obj['x']},y:{obj['y']})")
+def draw_object(id):
+    for obj in object_list: # for each object...
+        if obj['id'] == id:
+            start_x = obj['x']  # x pos of current obj
+            start_y = obj['y']  # y pos of current obj
+            try:
+                for y in range(len(obj['rows'])):#for each row of object
+                    for x in range(len(obj['rows'][y])): #for each col of row
+                        cell = grid[start_y+y][start_x+x]
+                        if obj['rows'][y][x] == ' ':    #found a blank in the tile to draw? Make it transparent
+                            if cell.type !='object':
+                                # cell.type = 'background'
+                                cell.tile=bkg
+                        else:
+                            if cell.tile == obj['rows'][y][x]:
+                                cell.hasChanged = False
+                                continue
+                            else:
+                                cell.tile = obj['rows'][y][x]
+                                cell.type = 'object'
+                                cell.color = obj['color']
+                                cell.hasChanged = True
+                return
+            except IndexError:
+                raise OutOfBoundsError(f"Obj {obj['id']} is out of screen (x:{obj['x']},y:{obj['y']})")
 
 def wind(velocity,direction):
     global current_flake,DEBUG
@@ -384,7 +393,7 @@ def weather_control(delay):
 
     # Let's handle the weather(flake type)
     if time.time() - weather_time > delay:
-        weather_list=[rain,small_flake,flake,small_flake]
+        weather_list=[flake,small_flake,rain,small_flake]
         current_flake = weather_list[current_weather]
         if current_weather==len(weather_list)-1:
             current_weather=0
@@ -394,19 +403,22 @@ def weather_control(delay):
 
 def advent_check():
     if (dt.datetime(2020, 11, 29) - dt.datetime.now()).days < 0:
+        draw_object('candle1_flame')
         animate_candle(1)
     if (dt.datetime(2020, 12, 6) - dt.datetime.now()).days < 0:
+        draw_object('candle2_flame')
         animate_candle(2)
     if (dt.datetime(2020, 12, 13) - dt.datetime.now()).days < 0:
+        draw_object('candle3_flame')
         animate_candle(3)
-    if (dt.datetime(2020, 12, 20) - dt.datetime.now()).days < 0:
+    if (dt.datetime(2020, 1, 20) - dt.datetime.now()).days < 0:
+        draw_object('candle4_flame')
         animate_candle(4)
 
 
 def simulate_winter():
     global wind_dir, wind_speed
     update_objects()    #only needed once, and if they change call it again.
-    # debug_snow()
     while True:
         draw_status()
         draw()
