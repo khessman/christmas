@@ -1,7 +1,7 @@
 # @Date:   2020-11-17T20:19:55+01:00
 # @Email:  kalle.hessman@gmail.com
 # @Filename: blaj4.py
-# @Last modified time: 2020-11-21T00:29:39+01:00
+# @Last modified time: 2020-11-22T16:49:17+01:00
 
 '''
 Dependencies:
@@ -32,7 +32,7 @@ def moveCursor (y, x):
 '''
 PARAMETERS BELOW:
 '''
-FRAME_RATE=60
+FRAME_RATE=50
 DEBUG = ""
 size_x,size_y = 200,60
 bkg=' '
@@ -41,7 +41,7 @@ small_flake='°'
 rain="'"
 heavy_rain='/'
 current_flake=flake
-wind_dir=1
+wind_dir=-1
 wind_speed=1
 wind_speed_inc=1
 wind_dir_inc=1
@@ -116,6 +116,10 @@ def update_snow():
             ground = len(grid)-1
             # If cell is frozen then dont touch it...
             if cell.frozen == True:
+                #this is a hotfix to make sure we dont freeze a rain tile.Fix the rootcause of this instead!
+                if cell.tile != flake:
+                    cell.tile=bkg
+                    cell.hasChanged=True
                 #..unless its rain that is falling.
                 if cellAbove.tile == rain:
                     cell.frozen = False
@@ -199,7 +203,7 @@ def wind(velocity,direction):
                     cell.hasChanged=True
                     continue
 
-                if cell.type == 'background' and cell.tile == current_flake and cell.frozen == False: #current cell is a flake and not frozen
+                if cell.type == 'background' and cell.tile == current_flake and cell.frozen == False and cellToLeft.frozen == False: #current cell is a flake and not frozen
                     # make sure we dont move a flake into an object or rollover from left to right side of screen(due to list rollover)
                     if cellToLeft.type !='object' and col+(direction*velocity) > 0:
                         cellToLeft.tile = cell.tile
@@ -223,7 +227,7 @@ def wind(velocity,direction):
                     cell.hasChanged=True
                     continue
 
-                if cell.type == 'background' and cell.tile == current_flake and cell.frozen == False: #current cell is a flake and not frozen
+                if cell.type == 'background' and cell.tile == current_flake and cell.frozen == False and cellToRight.frozen == False: #current cell is a flake and not frozen
                     # make sure we dont move a flake into an object or rollover from left to right side of screen(due to list rollover)
                     if cellToRight.type !='object' and col+(direction*velocity) > 0:
                         cellToRight.tile = cell.tile
@@ -315,7 +319,7 @@ def animate_candle():
                         cell.hasChanged = True
 
 def weather_control(delay):
-    global weather_time,current_flake,current_weather, wind_dir, wind_speed, wind_dir_time, wind_speed_time,wind_speed_inc, wind_dir_inc, DEBUG
+    global weather_time,current_flake,current_weather, wind_dir, wind_speed, wind_dir_time, wind_speed_time, wind_speed_inc, wind_dir_inc, DEBUG
 
 
     if time.time() - wind_speed_time > 0.5:
@@ -357,7 +361,7 @@ def simulate_winter():
     while True:
         draw_status()
         draw()
-        weather_control(20)
+        weather_control(180)
         generate_flakes(1)
         wind(wind_speed,wind_dir)
         update_snow()
