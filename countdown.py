@@ -1,7 +1,7 @@
 # @Date:   2020-11-17T20:19:55+01:00
 # @Email:  kalle.hessman@gmail.com
 # @Filename: blaj4.py
-# @Last modified time: 2020-11-22T22:31:38+01:00
+# @Last modified time: 2020-11-22T22:33:59+01:00
 
 '''
 Dependencies:
@@ -411,7 +411,7 @@ def advent_check():
     if (dt.datetime(2020, 12, 13) - dt.datetime.now()).days < 0:
         draw_object('candle3_flame')
         animate_candle(3)
-    if (dt.datetime(2020, 1, 20) - dt.datetime.now()).days < 0:
+    if (dt.datetime(2020, 12, 20) - dt.datetime.now()).days < 0:
         draw_object('candle4_flame')
         animate_candle(4)
 
